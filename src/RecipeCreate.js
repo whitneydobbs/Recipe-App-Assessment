@@ -1,109 +1,100 @@
 import React, { useState } from "react";
 
-function RecipeCreate({ addRecipe }) {
-  // TODO: When the form is submitted, a new recipe should be created, and the form contents cleared.
-  // TODO: Add the required input and textarea form elements.
-  // TODO: Add the required submit and change handlers
+function RecipeCreate({ setRecipes }) {
   const [name, setName] = useState("");
   const [cuisine, setCuisine] = useState("");
   const [photo, setPhoto] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [preparation, setPreparation] = useState("");
 
-  const handleNameChange = event => setName(event.target.value);
-  const handleCuisineChange = event => setCuisine(event.target.value);
-  const handlePhotoChange = event => setPhoto(event.target.value);
-  const handleIngredientsChange = event => setIngredients(event.target.value);
-  const handlePreparationChange = event => setPreparation(event.target.value);
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const newRecipe = {
-      name: name,
-      cuisine: cuisine,
-      photo: photo,
-      ingredients: ingredients,
-      preparation: preparation
-    };
-    addRecipe(newRecipe);
-    setName("");
-    setCuisine("");
-    setPhoto("");
-    setIngredients("");
-    setPreparation("");
-    console.log(newRecipe);
-  };
-  
-  
+  const handleName = ({ target }) => setName(target.value);
+  const handleCuisine = ({ target }) => setCuisine(target.value);
+  const handlePhoto = ({ target }) => setPhoto(target.value);
+  const handleIngredients = ({ target }) => setIngredients(target.value);
+  const handlePreparation = ({ target }) => setPreparation(target.value);
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      const data = {
+        name,
+        cuisine,
+        photo,
+        ingredients,
+        preparation
+      }
+      setRecipes((currentRecipes) => [...currentRecipes, data]);
+      setName("");
+      setCuisine("");
+      setPhoto("");
+      setIngredients("");
+      setPreparation("");
+  }
+
+  // TODO: When the form is submitted, a new recipe should be created, and the form contents cleared.
+  // TODO: Add the required input and textarea form elements.
+  // TODO: Add the required submit and change handlers
+
   return (
-    <form name="create">
+    <form onSubmit={handleSubmit} name="create">
       <table>
         <tbody>
           <tr>
             <td>
+
               <input
                 id="name"
-                required={true}
-                type="text"
                 name="name"
-                placeholder="Name"
-                onChange={handleNameChange}
+                required={true}
                 value={name}
-                size="10"
+                onChange={handleName}
+                placeholder="Name"
               />
-            </td>
-            <td>
+              </td>
+              <td>
               <input
                 id="cuisine"
-                required={true}
-                type="text"
                 name="cuisine"
-                placeholder="Cuisine"
-                onChange={handleCuisineChange}
+                required={true}
                 value={cuisine}
-                size="10"
+                onChange={handleCuisine}
+                placeholder="Cuisine"
               />
-            </td>
-            <td>
+              </td>
+              <td>
               <input
                 id="photo"
-                required={true}
-                type="text"
                 name="photo"
-                placeholder="Photo"
-                onChange={handlePhotoChange}
+                type="url"
+                required={true}
                 value={photo}
-                size="10"
+                onChange={handlePhoto}
+                placeholder="url"
               />
-            </td>
-            <td>
+              </td>
+              <td>
               <textarea
                 id="ingredients"
-                required={true}
-                type="text"
                 name="ingredients"
-                placeholder="Ingredients"
-                onChange={handleIngredientsChange}
+                type="text"
+                required={true}
                 value={ingredients}
-                size="10"
+                onChange={handleIngredients}
+                placeholder="Ingredients"
               />
-            </td>
-            <td>
+              </td>
+              <td>
               <textarea
                 id="preparation"
-                required={true}
-                type="text"
                 name="preparation"
-                placeholder="Preperation"
-                onChange={handlePreparationChange}
+                type="text"
+                required={true}
                 value={preparation}
-                size="10"
+                onChange={handlePreparation}
+                placeholder="Preparation"
               />
             </td>
             <td>
-              <button type="submit" onClick={handleSubmit}>
-                Create
-              </button>
+              <button type="submit">Create</button>
             </td>
           </tr>
         </tbody>
